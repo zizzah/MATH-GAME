@@ -1,0 +1,39 @@
+.containe{
+    border: 1px solid black;
+    width: 100%;
+}
+.flex{
+    display: flex;
+    padding: 10px;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+h2{
+    margin: auto;
+}
+
+.dis{
+    margin: auto;
+    display: flex;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.container-2{
+    width: 75%;
+    border: 1px solid black;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.flex-box-container-2{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 1px solid blueviolet;
+}
+.flex-box-container-2 img{
+    box-shadow: 2px 2px 2px 2px #623541;
+    border: 1px solid greenyellow;
+    
+}
