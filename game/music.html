@@ -35,10 +35,94 @@
               <div class="flex-box-container-2" id="flex-box">
               </div>
           </div>
+          <div class="container-2">
+
+            <h2>Rock Paper Scissors </h2>
+            <div class="score">
+                <p id="yourScore">your scores <span id="yours"> </span></p>
+                <p id="computerScore">computer scores <span id="computer"> </span></p>
+            </div>
+            <div class="flex-box-rps" id="flex-box-rps">
+                <img src="rock.jpg" alt="rock" id="rock">
+                <img src="paper.png" alt="paper" id="paper">
+                <img src="scissors.jpg" alt="scissors" id="scissors">
+
+            </div>
+                 <div class="flex-box-rps" id="inner">
+                 </div>
+          </div>
+
+          <div class="container-3">
+              <h2> challenge 4</h2>
+            <div class="flex-box-color">
+                <form action="">
+                <select name="backdroup" id="background">
+                    <option value="#">Select Color</option>
+                    <option value="red" style="background-color: red;">Red</option>
+                    <option value="green" style="background-color: green;">Green</option>
+                    <option value="random" style="background-color: rgb(rgb(0, 110, 255), rgb(51, 128, 0), rgb(58, 58, 231));">Random</option>
+                    <option value="reset">Reset</option>
+                </select>
+                </form>
+                <button class="btn btn-primary ">wee!</button>
+                <button class="btn btn-danger ">Yahoo</button>
+                <button class="btn btn-warning ">Google</button>
+                <button class="btn btn-success ">Facebook</button>
+
+            </div>
+           
+          
+
+            
+</div>
+
+<div class="container-4">
+    <h2>challenge 5: blackjack</h2>
+    <h3><span id="blackjack-result">let's play</span><h3>
+    <div class="flex-blackjack">
+<div class="div1">
+  <H2>YOU :<span id="your-blackjack-result"> 0</span></H2>
+  <div class="flex-box-panel" id="your-box">
+   
+  </div>
+</div>
+<div class="div">
+ <H2>Dealer :<span id="dealer-blackjack-result"> 0</span></H2>
+ <div class="flex-box-panel" id="dealer-box">
+     <img src="/game/images/k.png" alt="">
+     <img src="/game/images/five.png" alt="">
+     <img src="/game/images/four.png" alt="">
+ </div>
+</div>
+ 
+</div>
+
+<div class="div3">
+    <button class="btn-primary" id="blackjack-hit-button">Hit</button>
+    <button class="btn-warning" id="blackjack-stand-button">Stand</button>
+    <button class="btn-danger " id="blackjack-deal-button">Deal</button>
+
+
+</div> 
+<div class="flex-box-result">
+<table class="table">
+    <tr>
+        <th>win</th>
+        <th >draws</th>
+        <th>losses</th>
+    </tr>
+    <tr>
+        <td> <span id="win">0</span></td>
+        <td><span id="draw">0</span></td>
+        <td><span id="lose">0</span></td>
+    </tr>
+</table>
+</div>
 </div>
 
 <script src="challenge.js">
 
 </script>
+
 </body>
 </html>

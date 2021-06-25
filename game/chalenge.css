@@ -19,14 +19,20 @@ h2{
     border: 1px solid black;
 }
 
-.container-2{
+.container-2 ,.container-3,.container-4{
     width: 75%;
     border: 1px solid black;
     margin: 0 auto;
     text-align: center;
 }
 
-.flex-box-container-2{
+.container-4{
+    color: #fff;
+}
+.container-4{
+    background-color: #134307;
+}
+.flex-box-container-2,.flex-box-rps,.score,.flex-box-color,.flex-box-panel{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -35,5 +41,86 @@ h2{
 .flex-box-container-2 img{
     box-shadow: 2px 2px 2px 2px #623541;
     border: 1px solid greenyellow;
+    margin: 5px;
     
+}
+.flex-box-rps img{
+    width: 150px;
+    box-shadow: 4px 4px 4px #623541;
+
+    padding: 10px;
+    margin: 10px;
+}
+.flex-box-rps img:hover{
+    color: blue;
+    width: 180px;
+    box-shadow: 4px 4px 4px 4px blueviolet;
+}
+
+.flex-box-rps img :active{
+    width: 300px;
+    height: 200px;
+}
+
+#yourScore{
+    background-color: #198754;
+    color: #fff;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#computerScore{
+    background-color: #DC35B7;
+    color: #fff;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+#inner{
+    margin-top: 30px;
+    background-color: #623541;
+}
+
+.flex-blackjack{
+    display: flex;
+
+}
+.flex-blackjack div{
+    background-color: #134307;
+    flex: 1;
+    border: 1px solid black;
+    color: #fff;
+    height: 300px;
+}
+
+.div3{
+    display: flex;
+    margin-top: 50px;
+    background-color: #134307;
+    justify-content: center;
+    border: 1px solid black;
+}
+.div3 button{
+    
+    margin: 10px;
+    padding: 5px;
+}
+.table{
+    margin: auto;
+    width: 100px;
+    padding: 7px;
+    border: 1px solid black;
+    color: #fff;
+}
+td,th{
+    border: 1px solid black;
+}
+
+.flex-box-panel img{
+    width: 20%;
+    margin: 5px;
+    height: 150px;
+}
+.flex-box-result{
 }
