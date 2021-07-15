@@ -240,36 +240,250 @@ function buttonColorChange(buttonColor){
 
  let blackjackGame={
      'you':{'scoreSpan':'#your-blackjack-score','div':'#your-box','score':0},
-     'dealer':{'scoreSpan':'#dealer-blackjack-score','div':'#dealer-box','score':0}
+     'dealer':{'scoreSpan':'#dealer-blackjack-score','div':'#dealer-box','score':0},
+     'card':['2','3','4','5','6','7','8','9','10','K','J','Q','A'],
+     'cardMap':{'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'K':10,'J':10,'Q':10,'A':[1,11]}
 
  }
 
  const YOU =blackjackGame['you'];
 const DEALER = blackjackGame['dealer']
  const hitSound= new Audio('/game/sounds/swish.m4a')
+ const youWon = new Audio('/game/sounds/cash.mp3');
+ const youLost = new Audio('/game/sounds/aww.mp3');
 
  document.getElementById("blackjack-hit-button").onclick=function(){
  blackjackHit();
  }
 
-
-
- function randomGenerator(){
-     let rand;
-    rand= 1+ Math.floor(Math.random()*11);
-
-   return rand;
+ document.getElementById('blackjack-deal-button').onclick= function(){
+     blackjackDeal();
  }
+
+document.getElementById('blackjack-stand-button').onclick = function(){
+ blackjackStand();
+}
 
 
  function blackjackHit(){
-   showCard(YOU);
+    let card = pickCardRandom();
+
+   showCard(card,YOU);
+   updatingScores(card,YOU);
  }
 
 
- function showCard(activePlayer){
+
+ 
+  function blackjackStand(){
+    let card = pickCardRandom();
+
+    showCard(card,DEALER);
+    dealerUpdatingScores(card,DEALER);
+    console.log(DEALER['score'])
+  }
+
+  let win=0;
+  let draw =0;
+  let lose=0;
+
+ function computeWinner(){
+    
+     if(YOU['score'] <= 21 && DEALER['score']<=21){
+     if(YOU['score'] > DEALER['score']){
+         document.getElementById('blackjack-result').textContent="you won";
+         win+= win+ 1;
+         console.log(win);
+
+         document.getElementById('win').textContent = win;
+         youWon.play();
+
+     }
+     else if(YOU['score'] == DEALER['score']){
+        document.getElementById('blackjack-result').textContent="you draw";
+        document.getElementById('blackjack-result').style.color="yellow";
+        draw+= +1;
+        console.log(draw);
+
+        document.getElementById('draw').textContent = draw;
+        youLost.play();
+
+
+     }
+     else{
+        document.getElementById('blackjack-result').textContent="you lost";
+        document.getElementById('blackjack-result').style.color="red";
+        lose+=+1;
+        console.log(lose);
+
+        document.getElementById('lose').textContent = lose;
+        youLost.play();
+
+
+     }
+     }
+
+     else if(YOU['score']>21 && DEALER['score']>21 || YOU['score']==21&& DEALER['score']==21){
+        document.getElementById('blackjack-result').textContent="you draw";
+        draw +=+1;
+        document.getElementById('draw').textContent = draw;
+        console.log(draw);
+        youLost.play();
+
+
+        document.getElementById('blackjack-result').style.color="yellow";
+
+     }
+
+     else if(YOU['score']<= 21 && DEALER['score']>21){
+        document.getElementById('blackjack-result').textContent="you won";
+        win+=+1;
+        console.log(win);
+        youWon.play();
+
+        document.getElementById('win').textContent = win;
+
+     }
+  else{
+    document.getElementById('blackjack-result').textContent="you lost";
+    lose+=+1;
+    document.getElementById('lose').textContent = lose;
+  console.log(lose);
+    document.getElementById('blackjack-result').style.color="red";
+    youLost.play();
+    
+
+
+  }
+     
+
+
+ }
+
+ function pickCardRandom(){
+     
+    
+     let num= Math.floor(Math.random()*13);
+   
+    return blackjackGame['card'][num];
+  }
+ function showCard(card,activePlayer){
+     if(activePlayer['score'] <=21){
     let cardImage= document.createElement('img');
-    cardImage.src="/game/images/A.png";
+    cardImage.src= `images/${card}.png`;
     document.querySelector(activePlayer['div']).appendChild(cardImage);
     hitSound.play();
+     }
  }
+
+
+
+
+
+ 
+
+ function blackjackDeal(){
+     let yourImages = document.getElementById('your-box').querySelectorAll('img');
+     for(let i =0 ;i <yourImages.length; i++){
+         yourImages[i].remove();
+     }
+
+     let    dealerImages = document.getElementById('dealer-box').querySelectorAll('img');
+     for(let i =0 ;i <dealerImages.length; i++){
+         dealerImages[i].remove();
+     }
+   showScore(YOU);
+   showScore(DEALER);
+   document.getElementById('blackjack-result').textContent="let's play";
+   document.getElementById('blackjack-result').style.color="white";
+
+
+ }
+
+
+ 
+
+function updatingScores(card, activePlayer){
+ // let num=   activePlayer['score']+=blackjackGame['cardMap'][card];
+ document.getElementById('your-blackjack-result').textContent = 0;
+
+ if(card=='A'){
+     if(activePlayer['score']+blackjackGame['cardMap'][card][1]<=21){
+         activePlayer['score'] =+ blackjackGame['cardMap'][card][1];
+     }
+ 
+ else{
+     activePlayer['score'] += blackjackGame['cardMap'][card][0];
+ }
+}
+ else{
+     let mun = activePlayer['score']+=blackjackGame['cardMap'][card];
+     console.log('your scores is'+mun);
+ }
+     if(activePlayer['score']> 21){
+        document.getElementById('your-blackjack-result').style.color='red';
+        document.getElementById('your-blackjack-result').textContent='BUST'
+
+
+
+     }
+     else{
+        document.getElementById('your-blackjack-result').textContent = activePlayer['score']
+        document.getElementById('your-blackjack-result').style.color="white";
+
+
+     }
+}
+
+function showScore(activePlayer){
+   // document.querySelector(activePlayer['scoreSpan']).textContent=activePlayer['score']
+  // console.log(activePlayer['score']);
+activePlayer['score']=0;
+  // document.querySelector(activePlayer['scoreSpan']).innerHTML = b;
+  // console.log(activePlayer['scoreSpan'])
+  document.getElementById('your-blackjack-result').style.color="white";
+ document.getElementById('your-blackjack-result').innerHTML=0;
+
+ document.getElementById('dealer-blackjack-result').style.color="white";
+ document.getElementById('dealer-blackjack-result').innerHTML=0;
+
+  
+}
+
+
+
+
+function  dealerUpdatingScores(card, activePlayer){
+    // let num=   activePlayer['score']+=blackjackGame['cardMap'][card];
+    document.getElementById('dealer-blackjack-result').textContent=0;
+    if(card=='A'){
+        if(activePlayer['score']+blackjackGame['cardMap'][card][1]<=21){
+            activePlayer['score'] =+ blackjackGame['cardMap'][card][1];
+        }
+    
+    else{
+        activePlayer['score'] += blackjackGame['cardMap'][card][0];
+    }
+   }
+    else{
+        let mun = activePlayer['score']+=blackjackGame['cardMap'][card];
+        console.log('your scores is'+mun);
+    }
+        if(activePlayer['score']> 21){
+           document.getElementById('dealer-blackjack-result').style.color='red';
+           document.getElementById('dealer-blackjack-result').textContent='BUST'
+   
+   
+   
+        }
+        else{
+           document.getElementById('dealer-blackjack-result').textContent = activePlayer['score']
+           document.getElementById('dealer-blackjack-result').style.color="white";
+   
+   
+        }
+   }
+
+   document.getElementById('che').onclick= function(){
+       computeWinner();
+   }
