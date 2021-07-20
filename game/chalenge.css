@@ -124,3 +124,16 @@ td,th{
 }
 .flex-box-result{
 }
+
+#gameboard{
+    background-color: black;
+    width: 100%;
+    color: #fff;
+}
+
+#gameboard h1{
+    text-align: center;
+    font-size: large;
+
+    
+}

@@ -242,7 +242,13 @@ function buttonColorChange(buttonColor){
      'you':{'scoreSpan':'#your-blackjack-score','div':'#your-box','score':0},
      'dealer':{'scoreSpan':'#dealer-blackjack-score','div':'#dealer-box','score':0},
      'card':['2','3','4','5','6','7','8','9','10','K','J','Q','A'],
-     'cardMap':{'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'K':10,'J':10,'Q':10,'A':[1,11]}
+     'cardMap':{'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'K':10,'J':10,'Q':10,'A':[1,11]},
+     'win':0,
+     'draw':0,
+     'loses':0,
+     'isStand':false,
+     'turnOver':false,
+     'deal':false
 
  }
 
@@ -266,36 +272,68 @@ document.getElementById('blackjack-stand-button').onclick = function(){
 
 
  function blackjackHit(){
+
+    if(blackjackGame['isStand'] ===false){
     let card = pickCardRandom();
 
    showCard(card,YOU);
    updatingScores(card,YOU);
+   blackjackGame['turnOver']=true;
+
+   console.log(blackjackGame['isStand']);
  }
+ blackjackGame['turnOver']= true;
+ blackjackGame['deal']=true;
+
+ }
+// blackjackGame['isStand']=true;
 
 
-
+ function sleep(ms){
+     return new  Promise(resolve => setInterval(resolve,ms))
+ }
  
-  function blackjackStand(){
+  async function blackjackStand(){
+      if(blackjackGame['turnOver']===true){
+      while(DEALER['score']< 16){
+      
     let card = pickCardRandom();
-
+ 
     showCard(card,DEALER);
     dealerUpdatingScores(card,DEALER);
-    console.log(DEALER['score'])
+
+        await sleep(1000);
+
+    
+    blackjackGame['deal']=false;
+
+
   }
 
-  let win=0;
-  let draw =0;
-  let lose=0;
+  computeWinner();
 
+} 
+
+blackjackGame['isStand']=true;
+
+if(YOU['score']===0 & DEALER['score']===0){
+    blackjackGame['isStand']=false;
+}
+
+  }
+
+  
  function computeWinner(){
     
      if(YOU['score'] <= 21 && DEALER['score']<=21){
      if(YOU['score'] > DEALER['score']){
          document.getElementById('blackjack-result').textContent="you won";
-         win+= win+ 1;
-         console.log(win);
+         win+=+  1;
+         blackjackGame['win']++;
+         console.log(blackjackGame['win']);
 
-         document.getElementById('win').textContent = win;
+
+         document.getElementById('win').textContent = blackjackGame['win']
          youWon.play();
 
      }
@@ -304,8 +342,9 @@ document.getElementById('blackjack-stand-button').onclick = function(){
         document.getElementById('blackjack-result').style.color="yellow";
         draw+= +1;
         console.log(draw);
+        blackjackGame['draw']++
 
-        document.getElementById('draw').textContent = draw;
+        document.getElementById('draw').textContent = blackjackGame['draw'];
         youLost.play();
 
 
@@ -314,9 +353,10 @@ document.getElementById('blackjack-stand-button').onclick = function(){
         document.getElementById('blackjack-result').textContent="you lost";
         document.getElementById('blackjack-result').style.color="red";
         lose+=+1;
+        blackjackGame['loses']++;
         console.log(lose);
 
-        document.getElementById('lose').textContent = lose;
+        document.getElementById('lose').textContent = blackjackGame['loses'];
         youLost.play();
 
 
@@ -326,7 +366,8 @@ document.getElementById('blackjack-stand-button').onclick = function(){
      else if(YOU['score']>21 && DEALER['score']>21 || YOU['score']==21&& DEALER['score']==21){
         document.getElementById('blackjack-result').textContent="you draw";
         draw +=+1;
-        document.getElementById('draw').textContent = draw;
+        blackjackGame['draw']++;
+        document.getElementById('draw').textContent = blackjackGame['draw'];
         console.log(draw);
         youLost.play();
 
@@ -338,16 +379,18 @@ document.getElementById('blackjack-stand-button').onclick = function(){
      else if(YOU['score']<= 21 && DEALER['score']>21){
         document.getElementById('blackjack-result').textContent="you won";
         win+=+1;
+        blackjackGame['win']++
         console.log(win);
         youWon.play();
 
-        document.getElementById('win').textContent = win;
+        document.getElementById('win').textContent = blackjackGame['win'];
 
      }
   else{
     document.getElementById('blackjack-result').textContent="you lost";
     lose+=+1;
-    document.getElementById('lose').textContent = lose;
+    blackjackGame['loses']++
+    document.getElementById('lose').textContent = blackjackGame['loses'];
   console.log(lose);
     document.getElementById('blackjack-result').style.color="red";
     youLost.play();
@@ -383,6 +426,7 @@ document.getElementById('blackjack-stand-button').onclick = function(){
  
 
  function blackjackDeal(){
+     if(DEALER['score']>= 15){
      let yourImages = document.getElementById('your-box').querySelectorAll('img');
      for(let i =0 ;i <yourImages.length; i++){
          yourImages[i].remove();
@@ -397,7 +441,15 @@ document.getElementById('blackjack-stand-button').onclick = function(){
    document.getElementById('blackjack-result').textContent="let's play";
    document.getElementById('blackjack-result').style.color="white";
 
+   blackjackGame['isStand']=false;
+   blackjackGame['turnOver']=false;
 
+    }
+
+    else{
+        blackjackGame['turnOver']=false;
+    }
+   
  }
 
 
@@ -484,6 +536,4 @@ function  dealerUpdatingScores(card, activePlayer){
         }
    }
 
-   document.getElementById('che').onclick= function(){
-       computeWinner();
-   }
+   
