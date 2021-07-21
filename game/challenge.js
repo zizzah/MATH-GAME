@@ -254,9 +254,9 @@ function buttonColorChange(buttonColor){
 
  const YOU =blackjackGame['you'];
 const DEALER = blackjackGame['dealer']
- const hitSound= new Audio('/game/sounds/swish.m4a')
- const youWon = new Audio('/game/sounds/cash.mp3');
- const youLost = new Audio('/game/sounds/aww.mp3');
+ const hitSound= new Audio('swish.m4a')
+ const youWon = new Audio('cash.mp3');
+ const youLost = new Audio('aww.mp3');
 
  document.getElementById("blackjack-hit-button").onclick=function(){
  blackjackHit();
@@ -506,7 +506,7 @@ activePlayer['score']=0;
 
 
 function  dealerUpdatingScores(card, activePlayer){
-    // let num=   activePlayer['score']+=blackjackGame['cardMap'][card];
+
     document.getElementById('dealer-blackjack-result').textContent=0;
     if(card=='A'){
         if(activePlayer['score']+blackjackGame['cardMap'][card][1]<=21){
