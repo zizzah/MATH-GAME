@@ -53,9 +53,9 @@ function rspGame(yourChoice){
     result=decideWinner(humanChoice,botChoice);
     console.log(result);
     message=finalMassage(result);
-    var color =message.color;
-    console.log(message.message);
-    updatingScores(result);
+  //  var color =message.color;
+  //  console.log(message.message);
+   // updatingScores(result);
     rpsFontend(yourChoice.id,botChoice);
 }
 
